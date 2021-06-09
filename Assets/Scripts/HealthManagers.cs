@@ -8,16 +8,21 @@ using TMPro;
 public class HealthManagers : MonoBehaviour
 {
 
+    [SerializeField] private GameObject deathscreenPanel;
     public float health;
     public float maxhealth;
     public Image healthbar;
     public TextMeshProUGUI number;
+
+    bool isAlive;
 
     // Start is called before the first frame update
     void Start()
     {
         health = maxhealth;
         healthbar.fillAmount = 1;
+
+        isAlive = true;
     }
 
     // Update is called once per frame
@@ -45,6 +50,28 @@ public class HealthManagers : MonoBehaviour
             float fraction = health / maxhealth;
             healthbar.fillAmount = fraction;
             number.text = health + "/" + maxhealth;
+        }
+
+        if(health <= 0)
+        {
+            isAlive = false;
+        }
+        else
+        {
+            isAlive = true;
+        }
+
+        if( isAlive == false)
+        {
+            deathscreenPanel.SetActive(true);
+            Time.timeScale = 0;
+
+            //Want to make it spawn in a random.range location 
+        }
+        else
+        {
+            deathscreenPanel.SetActive(false);
+            Time.timeScale = 1;
         }
     }
 }

@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 public class MouseHandler : MonoBehaviour
 {
-    public float mouseSensitivity = 100f;
+    public float mouseSensitivity = 500f;
     public Transform playerBody;
     float xRotation = 0f;
     
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
