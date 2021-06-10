@@ -6,35 +6,77 @@ using TMPro;
 
 public class MenuHandler : MonoBehaviour
 {
+    [SerializeField] private GameObject MenuPanel;
     [SerializeField] private GameObject keyBindsPanel;
     [SerializeField] private GameObject healthBar;
     [SerializeField] private GameObject staminaBar;
     [SerializeField] private GameObject manaBar;
     [SerializeField] private GameObject miniMap;
-    [SerializeField] private GameObject keyBindsButton;
-    
+    //[SerializeField] private GameObject MenuButton;
 
-    public void KeyBindsSettingsOn()
+
+    public bool isPlaying;
+
+    void Start()
+    {
+        isPlaying = false;
+    }
+
+    private void Update()
+    {
+        if (isPlaying == true)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        if(isPlaying == false)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+
+        if (Input.GetKeyDown("e"))
+        {
+            isPlaying = false;
+            MenuPanelOn();
+        }
+    }
+
+    public void MenuPanelOn()
     {
         Time.timeScale = 0;
 
-        keyBindsPanel.SetActive(true);
+        MenuPanel.SetActive(true);
         healthBar.SetActive(false);
         staminaBar.SetActive(false);
         manaBar.SetActive(false);
         miniMap.SetActive(false);
-        keyBindsButton.SetActive(false);
+       // MenuButton.SetActive(false);
     }
 
-    public void KeyBindsSettingsOff()
+    public void MenuPanelOff()
     {
+        isPlaying = true;
+
         Time.timeScale = 1;
 
-        keyBindsPanel.SetActive(false);
+        MenuPanel.SetActive(false);
         healthBar.SetActive(true);
         staminaBar.SetActive(true);
         manaBar.SetActive(true);
         miniMap.SetActive(true);
-        keyBindsButton.SetActive(true);
+       // MenuButton.SetActive(true);
+    }
+    public void KeyBindsSettingsOn()
+    {
+        keyBindsPanel.SetActive(true);
+    }
+
+    public void KeyBindsSettingsOff()
+    {
+        keyBindsPanel.SetActive(false);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
