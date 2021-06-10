@@ -19,7 +19,7 @@ public class ThirdPersonMovement : MonoBehaviour
     bool isGrounded;
     bool isMoving;
 
-    private void Start()
+    public void Start()
     {
         isMoving = false;
     }

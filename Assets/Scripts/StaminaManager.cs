@@ -18,7 +18,7 @@ public class StaminaManager : MonoBehaviour
     public bool canRegen;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         stamina = maxStamina; //current stamina equa; max amount of stamina
         staminaBar.fillAmount = 1; //starts with full bar

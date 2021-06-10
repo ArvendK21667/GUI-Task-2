@@ -12,6 +12,11 @@ public class HealthManagers : MonoBehaviour
     [SerializeField] private GameObject StaminaBar;
     [SerializeField] private GameObject ManaBar;
     [SerializeField] private GameObject MiniMap;
+    [SerializeField] private GameObject CrossHair;
+    [SerializeField] private GameObject DamageIndicator;
+    [SerializeField] private GameObject Character;
+
+
     //[SerializeField] private GameObject MenuButton;
     public float health;
     public float maxhealth;
@@ -21,11 +26,18 @@ public class HealthManagers : MonoBehaviour
     public float HealthTimeToRegen = 3.0f;
     public float HealthRegenTimer = 0.0f;
 
+    public float time = 0.3f;
+    public float count = 0;
+
+    public StaminaManager staminamanagerScript;
+    public ManaManager manamanagerScript;
+    public ThirdPersonMovement thirdpersonmovementScript;
+
     bool isAlive;
     bool didtakeDamage;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         maxhealth = 100;
         health = maxhealth;
@@ -56,6 +68,8 @@ public class HealthManagers : MonoBehaviour
         {
             ResetHealthRegenTimer();
             didtakeDamage = false;
+            StartCoroutine(DamageIndicatorShow(1));
+
         }
         if(didtakeDamage == false) //when not taking damage do Regen method
         {
@@ -78,24 +92,30 @@ public class HealthManagers : MonoBehaviour
 
         if (isAlive == false) //if DEAD, bring death panel, remove stat bars & map and pauses time
         {
-            deathscreenPanel.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            DeathScreenRespawn();
             HealthBar.SetActive(false);
             StaminaBar.SetActive(false);
             ManaBar.SetActive(false);
             MiniMap.SetActive(false);
-           // MenuButton.SetActive(false);
+            CrossHair.SetActive(false);
+            
+            // MenuButton.SetActive(false);
             Time.timeScale = 0;
 
             //Want to make it spawn in a random.range location 
         }
-        else //otherwise don't open death panel, remove stat bars & map nor pause the time
+        else //otherwise don't open death panel, remove stat bars & map nor pause the time. Also remove the lock on cursor.
         {
             deathscreenPanel.SetActive(false);
             HealthBar.SetActive(true);
             StaminaBar.SetActive(true);
             ManaBar.SetActive(true);
             MiniMap.SetActive(true);
+            CrossHair.SetActive(true);
             //MenuButton.SetActive(true);
+            Cursor.lockState = CursorLockMode.Locked;
             Time.timeScale = 1;
         }
     }
@@ -123,5 +143,85 @@ public class HealthManagers : MonoBehaviour
     public void ResetHealthRegenTimer() //resets regentimer method
     {
         HealthRegenTimer = 0f;
+    }
+
+    public void DamageIndicatorMethodOn() //damage indicator on
+    {
+        DamageIndicator.SetActive(true);
+    }
+    public void DamageIndicatorMethodOff() //damage indicator off
+    {
+        DamageIndicator.SetActive(false);
+    }
+
+    private IEnumerator DamageIndicatorShow(float _time) //turns damage indicator on. In 0.3 seconds turns it off again.
+    {
+        _time = Time.deltaTime; //_time to equal real time
+
+        DamageIndicatorMethodOn(); //damage indicator on Method
+
+        yield return new WaitForSeconds(_time); //Waiting for (_time) seconds (0.3 real seconds)
+
+        DamageIndicatorMethodOff(); //damage indicator off Method
+    }
+    public void DeathScreenRespawn() //Pops up Death Screen panel
+    {
+        deathscreenPanel.SetActive(true);
+    }
+
+    public void Respawn() //Does respawn Method
+    {
+        Cursor.lockState = CursorLockMode.None; //Unlocks Cursor
+        deathscreenPanel.SetActive(false); //Disables Death Screen
+        Character.transform.position = new Vector3(-2, 0, -10); //respawns the charecter
+        Start(); // Restarts the Start Method
+        manamanagerScript.Start(); // Restarts the Start Method
+        staminamanagerScript.Start(); // Restarts the Start Method
+        thirdpersonmovementScript.Start(); // Restarts the Start Method
+        HealthBar.SetActive(true); //Activates HealthBar
+        StaminaBar.SetActive(true); //Activates Stamina Bar
+        ManaBar.SetActive(true); //Activates Mana bar
+        MiniMap.SetActive(true); //Activates Mini-map
+        CrossHair.SetActive(true); //Activates Crosshair
+        Cursor.lockState = CursorLockMode.Locked; //Locks Cursor
+        DamageIndicatorMethodOff(); //turns off damage indicator from death
+        Time.timeScale = 1; //unPauses times
+    }
+
+    public void IsAliveTrue()
+    {
+        isAlive = true;
+       if(isAlive == true) //otherwise don't open death panel, remove stat bars & map nor pause the time. Also remove the lock on cursor.
+       {
+            deathscreenPanel.SetActive(false);
+            HealthBar.SetActive(true);
+            StaminaBar.SetActive(true);
+            ManaBar.SetActive(true);
+            MiniMap.SetActive(true);
+            CrossHair.SetActive(true);
+            //MenuButton.SetActive(true);
+            Cursor.lockState = CursorLockMode.Locked;
+            Time.timeScale = 1;
+       }
+    }
+    public void IsAliveFalse()
+    {
+        isAlive = false;
+        if (isAlive == false) //if DEAD, bring death panel, remove stat bars & map and pauses time
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            DeathScreenRespawn();
+            HealthBar.SetActive(false);
+            StaminaBar.SetActive(false);
+            ManaBar.SetActive(false);
+            MiniMap.SetActive(false);
+            CrossHair.SetActive(false);
+
+            // MenuButton.SetActive(false);
+            Time.timeScale = 0;
+
+            //Want to make it spawn in a random.range location 
+        }
     }
 } 

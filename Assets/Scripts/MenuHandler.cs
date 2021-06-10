@@ -12,6 +12,10 @@ public class MenuHandler : MonoBehaviour
     [SerializeField] private GameObject staminaBar;
     [SerializeField] private GameObject manaBar;
     [SerializeField] private GameObject miniMap;
+    [SerializeField] private GameObject CrossHair;
+
+    public HealthManagers healthmanagersScript;
+
     //[SerializeField] private GameObject MenuButton;
 
 
@@ -22,15 +26,18 @@ public class MenuHandler : MonoBehaviour
         isPlaying = false;
     }
 
+
     private void Update()
     {
         if (isPlaying == true)
         {
             Cursor.lockState = CursorLockMode.Locked;
+            healthmanagersScript.IsAliveTrue();
         }
-        if(isPlaying == false)
+        if (isPlaying == false)
         {
             Cursor.lockState = CursorLockMode.None;
+            healthmanagersScript.IsAliveFalse();
         }
 
         if (Input.GetKeyDown("e"))
@@ -49,7 +56,8 @@ public class MenuHandler : MonoBehaviour
         staminaBar.SetActive(false);
         manaBar.SetActive(false);
         miniMap.SetActive(false);
-       // MenuButton.SetActive(false);
+        CrossHair.SetActive(false);
+        // MenuButton.SetActive(false);
     }
 
     public void MenuPanelOff()
@@ -63,7 +71,8 @@ public class MenuHandler : MonoBehaviour
         staminaBar.SetActive(true);
         manaBar.SetActive(true);
         miniMap.SetActive(true);
-       // MenuButton.SetActive(true);
+        CrossHair.SetActive(true);
+        // MenuButton.SetActive(true);
     }
     public void KeyBindsSettingsOn()
     {
