@@ -23,24 +23,13 @@ public class MenuHandler : MonoBehaviour
 
     void Start()
     {
-        isPlaying = false;
+        isPlaying = false; //set to not playing game and on menu only
     }
 
 
     private void Update()
     {
-        if (isPlaying == true)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            healthmanagersScript.IsAliveTrue();
-        }
-        if (isPlaying == false)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            healthmanagersScript.IsAliveFalse();
-        }
-
-        if (Input.GetKeyDown("e"))
+        if (Input.GetKeyDown("e")) //open the options panel 
         {
             isPlaying = false;
             MenuPanelOn();
@@ -49,42 +38,50 @@ public class MenuHandler : MonoBehaviour
 
     public void MenuPanelOn()
     {
-        Time.timeScale = 0;
+        isPlaying = false; //not playing game
 
-        MenuPanel.SetActive(true);
-        healthBar.SetActive(false);
-        staminaBar.SetActive(false);
-        manaBar.SetActive(false);
-        miniMap.SetActive(false);
-        CrossHair.SetActive(false);
+        Time.timeScale = 0; //pause time
+
+        Cursor.lockState = CursorLockMode.None; //unlock cursor
+
+        MenuPanel.SetActive(true);    //Activates Menu Panel
+        healthBar.SetActive(false);   //Deactivates HealthBar
+        staminaBar.SetActive(false);  //Deactivates Stamina Bar
+        manaBar.SetActive(false);     //Deactivates Mana bar
+        miniMap.SetActive(false);     //Deactivates Mini-map
+        CrossHair.SetActive(false);   //Deactivates Crosshair
         // MenuButton.SetActive(false);
     }
 
     public void MenuPanelOff()
     {
-        isPlaying = true;
+        isPlaying = true; //playing game
 
-        Time.timeScale = 1;
+        Time.timeScale = 1; //unpause time
 
-        MenuPanel.SetActive(false);
-        healthBar.SetActive(true);
-        staminaBar.SetActive(true);
-        manaBar.SetActive(true);
-        miniMap.SetActive(true);
-        CrossHair.SetActive(true);
+        Cursor.lockState = CursorLockMode.Locked; //lock cursor
+
+        MenuPanel.SetActive(false);  //Deactivates Menu Panel
+        healthBar.SetActive(true);   //Activates HealthBar
+        staminaBar.SetActive(true);  //Activates Stamina Bar
+        manaBar.SetActive(true);     //Activates Mana bar
+        miniMap.SetActive(true);     //Activates Mini-map
+        CrossHair.SetActive(true);   //Activates Crosshair
         // MenuButton.SetActive(true);
     }
     public void KeyBindsSettingsOn()
     {
-        keyBindsPanel.SetActive(true);
+        keyBindsPanel.SetActive(true); //Activates KeyBinds Panel
+        MenuPanel.SetActive(false);    //Deactivates Menu Panel
     }
 
     public void KeyBindsSettingsOff()
     {
-        keyBindsPanel.SetActive(false);
+        keyBindsPanel.SetActive(false); //Deactivates KeyBinds Panel
+        MenuPanel.SetActive(true);      //Activates Menu Panel
     }
 
-    public void QuitGame()
+    public void QuitGame() //Quit Method
     {
         Application.Quit();
     }

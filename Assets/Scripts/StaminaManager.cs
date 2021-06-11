@@ -24,9 +24,33 @@ public class StaminaManager : MonoBehaviour
         staminaBar.fillAmount = 1; //starts with full bar
     }
 
-    public void StaminaReduction()
+    public void StaminaReductionByWalking()
     {
         stamina -= .4f;  // reduces some stamina  
+        if (stamina < 0)  //makes it not go below 0
+        {
+            stamina = 0;
+        }
+        float fraction = stamina / maxStamina;     // makes it a fraction
+        staminaBar.fillAmount = fraction;          // changes fillamount on bar
+        number.text = stamina + "/" + maxStamina;  // chnages number on text for bar
+    }
+
+    public void StaminaReductionBySprinting()
+    {
+        stamina -= .7f;  // reduces some stamina  
+        if (stamina < 0)  //makes it not go below 0
+        {
+            stamina = 0;
+        }
+        float fraction = stamina / maxStamina;     // makes it a fraction
+        staminaBar.fillAmount = fraction;          // changes fillamount on bar
+        number.text = stamina + "/" + maxStamina;  // chnages number on text for bar
+    }
+
+    public void StaminaReductionByCrouching()
+    {
+        stamina -= .25f;  // reduces some stamina  
         if (stamina < 0)  //makes it not go below 0
         {
             stamina = 0;
@@ -71,4 +95,7 @@ public class StaminaManager : MonoBehaviour
     {
         StaminaRegenTimer = 0f;
     }
+
+
+
 }

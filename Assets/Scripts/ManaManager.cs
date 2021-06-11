@@ -7,7 +7,6 @@ using TMPro;
 
 public class ManaManager : MonoBehaviour
 {
-
     public float mana;
     public float maxMana;
     public Image manaBar;
@@ -31,27 +30,24 @@ public class ManaManager : MonoBehaviour
 
         if(mana < maxMana)
         {
-            
-              mana = Mathf.Clamp(mana + 0.02f + (Time.deltaTime), 0.0f, maxMana);
-            
+            mana = Mathf.Clamp(mana + 0.02f + (Time.deltaTime), 0.0f, maxMana); //increase the mana over time
 
-            float fraction = mana / maxMana;
-            manaBar.fillAmount = fraction;
-            progressText.text = fraction * 100 + "%";
+            float fraction = mana / maxMana;          // makes it a fraction
+            manaBar.fillAmount = fraction;            // changes fillamount on bar
+            progressText.text = fraction * 100 + "%"; // chnages number on text for bar
         }
 
-        if (mana >= maxMana)
+        if (mana >= maxMana) //if is over 100 make it 100
         {
-            mana = 100;
+            mana = 100; 
 
-            if (Input.GetKeyDown("l"))
+            if (Input.GetKeyDown("l")) //use power and reduce to 0
             {
+                mana = 0; 
 
-                mana = 0;
-
-                float fraction = mana / maxMana;
-                manaBar.fillAmount = fraction;
-                progressText.text = fraction * 100 + "%";
+                float fraction = mana / maxMana;          // makes it a fraction
+                manaBar.fillAmount = fraction;            // changes fillamount on bar
+                progressText.text = fraction * 100 + "%"; // chnages number on text for bar
 
                 ManaRegenTimer = 0.0f;
             }
