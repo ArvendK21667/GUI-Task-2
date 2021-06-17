@@ -93,8 +93,10 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             moveSpeed = crouchingspeed;
         }
-        else //otherwise having normal walking speed
+        else//otherwise having normal walking speed
+        {
             moveSpeed = walkingspeed;
+        }
 
         if (Input.GetButtonDown("Jump") && isGrounded) //if input jump "Space Bar" 
         {

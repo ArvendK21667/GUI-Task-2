@@ -95,7 +95,4 @@ public class StaminaManager : MonoBehaviour
     {
         StaminaRegenTimer = 0f;
     }
-
-
-
 }
