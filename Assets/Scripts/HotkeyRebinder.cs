@@ -107,7 +107,9 @@ public class HotkeyRebinder : MonoBehaviour
             if (newKey != "")
             {
                 //Changes our key in the Dictionary to the key we just pressed.
-                keys[currentKey.name] = (KeyCode)System.Enum.Parse(typeof(KeyCode), newKey);
+                string trimcurrentkey = currentKey.name;
+                trimcurrentkey.Trim();
+                keys[trimcurrentkey] = (KeyCode)System.Enum.Parse(typeof(KeyCode), newKey);
 
                 //Change the display text to match
                 currentKey.GetComponentInChildren<TextMeshProUGUI>().text = newKey;
@@ -121,3 +123,4 @@ public class HotkeyRebinder : MonoBehaviour
         }
     }
 }
+

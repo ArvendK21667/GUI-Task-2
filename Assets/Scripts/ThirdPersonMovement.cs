@@ -68,8 +68,22 @@ public class ThirdPersonMovement : MonoBehaviour
             velocity.y = -2f;
         }
 
-        float x = Input.GetAxis("Horizontal"); //giving x value of Horizontal Axis
-        float z = Input.GetAxis("Vertical"); //giving z value of Vertical Axis
+
+        float z = 0;
+        if(Input.GetKey(HotkeyRebinder.keys["Forward"]))
+            { z += 1; }
+        if(Input.GetKey(HotkeyRebinder.keys["Backward"]))
+            { z -= 1; }
+
+        float x = 0;
+        if (Input.GetKey(HotkeyRebinder.keys["Right"]))
+        { x += 1; }
+        if (Input.GetKey(HotkeyRebinder.keys["Left"]))
+        { x -= 1; }
+
+
+        //= Input.GetAxis("Horizontal"); //giving x value of Horizontal Axis
+        //float z = Input.GetAxis("Vertical"); //giving z value of Vertical Axis
 
         Vector3 move = transform.right * x + transform.forward * z; //Making character move 
 
@@ -85,11 +99,11 @@ public class ThirdPersonMovement : MonoBehaviour
 
         float moveSpeed;
 
-        if (Input.GetKey(KeyCode.R)) //if you press R change move speed to sprint
+        if (Input.GetKey(HotkeyRebinder.keys["Sprint"])) //if you press R change move speed to sprint
         {
             moveSpeed = sprintingspeed;
         }
-        else if (Input.GetKey(KeyCode.LeftShift)) //if you press Left Shift change move speed to crouch
+        else if (Input.GetKey(HotkeyRebinder.keys["Crouch"]))//KeyCode.LeftShift)) //if you press Left Shift change move speed to crouch
         {
             moveSpeed = crouchingspeed;
         }
@@ -98,7 +112,7 @@ public class ThirdPersonMovement : MonoBehaviour
             moveSpeed = walkingspeed;
         }
 
-        if (Input.GetButtonDown("Jump") && isGrounded) //if input jump "Space Bar" 
+        if (Input.GetKey(HotkeyRebinder.keys["Jump"]) && isGrounded) //if input jump "Space Bar" 
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity); //Jump
             staminaScript.StaminaReductionByJump();
